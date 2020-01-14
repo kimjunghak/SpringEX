@@ -3,11 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <link rel="stylesheet" th:href="@{/css/board.css}">
 </head>
 <body>
     <div th:insert="common/header.html" id="header"/>
 
     <a th:href="@{/post}">Write</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th class="one wide">Number</th>
+            <th class="ten wide">Title</th>
+            <th class="two wide">Writer</th>
+            <th class="three wide">Date</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="board : ${boardList}">
+            <td>
+                <span th:text="${board.id}"></span>
+            </td>
+
+            <td>
+                <a th:href="@{'/post' + ${board.id}">
+                    <span th:text="${board.title}"></span>
+                </a>
+            </td>
+
+            <td>
+                <span th:text="${board.writer}"></span>
+            </td>
+
+            <td>
+                <span th:text="${#temporals.format(board.createdTime, 'yyyy-MM-dd HH:mm')}"></span>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
 
     <div th:insert="common/footer.html" id="footer"/>
 </body>

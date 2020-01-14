@@ -4,8 +4,11 @@ import com.practice.board.dto.BoardDto;
 import com.practice.board.service.BoardService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -13,10 +16,10 @@ public class BoardController {
 
     private BoardService boardService;
 
-    @GetMapping("/")
-    public String list(){
-        return "/board/list.html";
-    }
+//    @GetMapping("/")
+//    public String list(){
+//        return "/board/list.html";
+//    }
 
     @GetMapping("/post")
     public String write(){
@@ -28,5 +31,13 @@ public class BoardController {
         boardService.savePost(boardDto);
 
         return "redirect:/";
+    }
+
+    @GetMapping("/")
+    public String list(Model model){
+        List<BoardDto> boardList = boardService.getBoardList();
+
+        model.addAttribute("boardList", boardList);
+        return "/board/list.html";
     }
 }
